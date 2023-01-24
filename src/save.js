@@ -1,17 +1,10 @@
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * React hook that is used to mark the block wrapper element.
  * It provides all the necessary props like the class name.
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -20,15 +13,19 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
  *
+ * @param {Object} root0
+ * @param {Object} root0.attributes
+ *
  * @return {WPElement} Element to render.
  */
-export default function save() {
+export default function save( { attributes } ) {
+	const { text } = attributes;
+
 	return (
-		<p { ...useBlockProps.save() }>
-			{ __(
-				'Boilerplate – hello from the saved content!',
-				'boilerplate'
-			) }
-		</p>
+		<RichText.Content
+			{ ...useBlockProps.save() }
+			tagName="h4"
+			value={ text }
+		/>
 	);
 }
